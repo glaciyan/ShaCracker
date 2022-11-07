@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -34,7 +34,7 @@ public static class Program
             foreach (var dummy in PasswordGenerator.ProducePasswords(c.first, c.second, passwordBuffer))
             {
                 SHA1.HashData(passwordBuffer, hashBuffer);
-                if (!passwordBuffer.SequenceEqual(shouldBeBytes)) continue;
+                if (!hashBuffer.SequenceEqual(shouldBeBytes)) continue;
 
                 Console.WriteLine($"Found password {Encoding.ASCII.GetString(passwordBuffer)}");
                 Console.WriteLine($"Time elapsed: {stopwatch.Elapsed}");
