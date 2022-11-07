@@ -59,12 +59,14 @@ public static class PasswordGenerator
         'z'
     };
 
-    public static IEnumerable<(char first, char second)> Produce2Chars()
+    public static IEnumerable<(char first, char second)> Produce2Chars(int startFirst = 0, int startSecond = 0)
     {
-        foreach (var first in Chars)
+        for (int i = startFirst; i < Chars.Length; i++)
         {
-            foreach (var second in Chars)
+            char first = Chars[i];
+            for (int i1 = startSecond; i1 < Chars.Length; i1++)
             {
+                char second = Chars[i1];
                 yield return (first, second);
             }
         }
@@ -73,9 +75,9 @@ public static class PasswordGenerator
     public static IEnumerable<int> ProducePasswords(char first, char second, byte[] buffer)
     {
         if (buffer.Length != 6) throw new ArgumentException("buffer must have length of 6");
-        
-        buffer[0] = (byte) first;
-        buffer[1] = (byte) second;
+
+        buffer[0] = (byte)first;
+        buffer[1] = (byte)second;
 
         foreach (var third in Chars)
         {
@@ -85,10 +87,10 @@ public static class PasswordGenerator
                 {
                     foreach (var sixth in Chars)
                     {
-                        buffer[2] = (byte) third;
-                        buffer[3] = (byte) fourth;
-                        buffer[4] = (byte) fifth;
-                        buffer[5] = (byte) sixth;
+                        buffer[2] = (byte)third;
+                        buffer[3] = (byte)fourth;
+                        buffer[4] = (byte)fifth;
+                        buffer[5] = (byte)sixth;
                         yield return 1;
                     }
                 }
