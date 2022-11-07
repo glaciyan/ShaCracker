@@ -4,7 +4,6 @@ public static class PasswordGenerator
 {
     public static char[] Chars =
     {
-        '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
         'A',
         'B',
         'C',
@@ -56,7 +55,8 @@ public static class PasswordGenerator
         'w',
         'x',
         'y',
-        'z'
+        'z',
+        '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
     };
 
     public static IEnumerable<(char first, char second)> Produce2Chars(int startFirst = 0, int startSecond = 0)
