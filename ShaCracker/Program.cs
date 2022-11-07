@@ -27,6 +27,7 @@ public static class Program
 
         Parallel.ForEach(PasswordGenerator.Produce2Chars(), (c, state) =>
         {
+            Console.WriteLine($"Starting Thread {Environment.CurrentManagedThreadId} trying {c.first}{c.second}????");
             var passwordBuffer = GC.AllocateUninitializedArray<byte>(6);
             var hashBuffer = (Span<byte>) GC.AllocateUninitializedArray<byte>(HashSizeBytes);
 
