@@ -1,5 +1,4 @@
-﻿using System.Collections.Immutable;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -19,9 +18,9 @@ public static class Program
         }
 
         var shouldBe = args[0];
-            var shouldBeBytes = (from x in Enumerable.Range(0, shouldBe.Length)
-                where x % 2 == 0
-                select Convert.ToByte(shouldBe.Substring(x, 2), 16)).ToArray();
+        var shouldBeBytes = (from x in Enumerable.Range(0, shouldBe.Length)
+            where x % 2 == 0
+            select Convert.ToByte(shouldBe.Substring(x, 2), 16)).ToArray();
 
         var stopwatch = new Stopwatch();
         stopwatch.Start();
