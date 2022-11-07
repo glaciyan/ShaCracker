@@ -61,12 +61,12 @@ public static class PasswordGenerator
 
     public static IEnumerable<(char first, char second)> Produce2Chars(int startFirst = 0, int startSecond = 0)
     {
-        for (int i = startFirst; i < Chars.Length; i++)
+        for (var i = startFirst; i < Chars.Length; i++)
         {
-            char first = Chars[i];
-            for (int i1 = startSecond; i1 < Chars.Length; i1++)
+            var first = Chars[i];
+            for (var i1 = startSecond; i1 < Chars.Length; i1++)
             {
-                char second = Chars[i1];
+                var second = Chars[i1];
                 yield return (first, second);
             }
         }
