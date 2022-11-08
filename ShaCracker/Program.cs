@@ -34,7 +34,7 @@ public static class Program
             Console.WriteLine($"Starting Thread {Environment.CurrentManagedThreadId} trying {c.first}{c.second}????");
             // allocate memory
             var passwordBuffer = GC.AllocateUninitializedArray<byte>(6);
-            var hashBuffer = (Span<byte>) GC.AllocateUninitializedArray<byte>(HashSizeBytes);
+            var hashBuffer = GC.AllocateUninitializedArray<byte>(HashSizeBytes);
 
             // generate 4 more characters to test all 6 character sequences
             // and check if the SHA1 hash matches with the given hash from above
