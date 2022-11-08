@@ -19,7 +19,7 @@ public static class Program
 
         // the first arg should be the hash
         var shouldBe = args[0];
-        // convert the given hash into a byte array
+        // convert the given hexadecimal hash into a byte array
         var shouldBeBytes = (from x in Enumerable.Range(0, shouldBe.Length)
             where x % 2 == 0
             select Convert.ToByte(shouldBe.Substring(x, 2), 16)).ToArray();
