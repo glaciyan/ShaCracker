@@ -29,7 +29,7 @@ public static class Program
         stopwatch.Start();
 
         // start a thread for each 2 character combination
-        Parallel.ForEach(PasswordGenerator.Produce2Chars(), (c, state) =>
+        Parallel.ForEach(PasswordGenerator.Produce2Chars(), (c) =>
         {
             Console.WriteLine($"Starting Thread {Environment.CurrentManagedThreadId} trying {c.first}{c.second}????");
             // allocate memory
@@ -41,12 +41,22 @@ public static class Program
             foreach (var dummy in PasswordGenerator.ProducePasswords(c.first, c.second, passwordBuffer))
             {
                 SHA1.HashData(passwordBuffer, hashBuffer);
-                if (!hashBuffer.SequenceEqual(shouldBeBytes)) continue;
+                var equal = true;
+                for (var i = 0; i < HashSizeBytes; i++)
+                {
+                    if (hashBuffer[i] != shouldBeBytes[i])
+                    {
+                        equal = false;
+                        break;
+                    }
+                }
+                if (!equal) continue;
 
                 // print out the password and kill the parallel operation
                 Console.WriteLine($"Found password {Encoding.ASCII.GetString(passwordBuffer)}");
                 Console.WriteLine($"Time elapsed: {stopwatch.Elapsed}");
-                state.Stop();
+                // state.Stop();
+                Environment.Exit(0);
                 break;
             }
         });
