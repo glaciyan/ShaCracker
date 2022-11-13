@@ -29,15 +29,14 @@ public static class Program
         stopwatch.Start();
 
         // start a thread for each 2 character combination
-        Parallel.ForEach(PasswordGenerator.Produce2Chars(), (c) =>
+        Parallel.ForEach(PasswordGenerator.Chars, (c) =>
         {
-            Console.WriteLine($"Starting Thread {Environment.CurrentManagedThreadId} trying {c.first}{c.second}????");
+            Console.WriteLine($"Starting Thread {Environment.CurrentManagedThreadId} trying {c}????");
             // allocate memory
-            var passwordBuffer = GC.AllocateUninitializedArray<byte>(6);
+            var passwordBuffer = GC.AllocateUninitializedArray<byte>(5);
             var hashBuffer = GC.AllocateUninitializedArray<byte>(HashSizeBytes);
             
-            passwordBuffer[0] = (byte) c.first;
-            passwordBuffer[1] = (byte) c.second;
+            passwordBuffer[0] = (byte) c;
 
             // generate 4 more characters to test all 6 character sequences
             // and check if the SHA1 hash matches with the given hash from above
@@ -49,10 +48,10 @@ public static class Program
                     {
                         foreach (var sixth in PasswordGenerator.Chars)
                         {
-                            passwordBuffer[2] = (byte) third;
-                            passwordBuffer[3] = (byte) fourth;
-                            passwordBuffer[4] = (byte) fifth;
-                            passwordBuffer[5] = (byte) sixth;
+                            passwordBuffer[1] = (byte) third;
+                            passwordBuffer[2] = (byte) fourth;
+                            passwordBuffer[3] = (byte) fifth;
+                            passwordBuffer[4] = (byte) sixth;
                             
                             SHA1.HashData(passwordBuffer, hashBuffer);
                             var equal = true;
