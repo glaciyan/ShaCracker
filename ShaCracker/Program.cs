@@ -35,7 +35,7 @@ public static class Program
             // allocate memory
             var passwordBuffer = GC.AllocateUninitializedArray<byte>(5);
             var hashBuffer = GC.AllocateUninitializedArray<byte>(HashSizeBytes);
-            
+
             passwordBuffer[0] = (byte) c;
 
             // generate 4 more characters to test all 6 character sequences
@@ -52,7 +52,7 @@ public static class Program
                             passwordBuffer[2] = (byte) fourth;
                             passwordBuffer[3] = (byte) fifth;
                             passwordBuffer[4] = (byte) sixth;
-                            
+
                             SHA1.HashData(passwordBuffer, hashBuffer);
                             var equal = true;
                             for (var i = 0; i < HashSizeBytes; i++)
@@ -77,6 +77,9 @@ public static class Program
                 }
             }
         });
+
+        Console.WriteLine("Nothing found, idiot.");
+        Console.WriteLine($"Time elapsed: {stopwatch.Elapsed}");
 
         return 0;
     }
