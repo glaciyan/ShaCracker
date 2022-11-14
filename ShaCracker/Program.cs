@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -53,7 +54,21 @@ public static class Program
                             passwordBuffer[3] = (byte) fifth;
                             passwordBuffer[4] = (byte) sixth;
 
-                            SHA1.HashData(passwordBuffer, hashBuffer);
+                            unsafe
+                            {
+                                // SHA1.HashData(passwordBuffer, hashBuffer);
+                                fixed (byte* pSource = &MemoryMarshal.GetReference((ReadOnlySpan<byte>) passwordBuffer))
+                                fixed (byte* pDest = &MemoryMarshal.GetReference((ReadOnlySpan<byte>) hashBuffer))
+                                {
+                                    var status = CustomBCrypt.BCryptHash(49U, null, 0, pSource, passwordBuffer.Length,
+                                        pDest, 160 / 8);
+                                    if (status != 0U)
+                                    {
+                                        throw new CryptographicException();
+                                    }
+                                }
+                            }
+
                             var equal = true;
                             for (var i = 0; i < HashSizeBytes; i++)
                             {
